@@ -23,9 +23,11 @@ typedef char BLK_DATA_TYPE;
 #define MAX_CHILDREN 10
 #define MAX_LEVEL 10
 #define FREE_BLK 0
-#define INODE_OFFSET sizeof(long)+sizeof(long)*100
-#define DATA_OFFSET (INODE_OFFSET + sizeof(struct inode)*100)
-#define FILE_NAME "/home/priyank/usp/USP_fs/memory_fil.dat"
+#define STACK_TOP sizeof(long)
+#define INODES_LIST sizeof(int) + STACK_TOP
+#define INODE_OFFSET INODES_LIST+sizeof(long)*NUM_INODES
+#define DATA_OFFSET (INODE_OFFSET + sizeof(struct inode)*NUM_INODES)
+#define FILE_NAME "./memory_fil.dat"
 int init_storage();
 
 /*------------------------------------- FILE DESCRIPTOR ----------------------------------------*/
@@ -50,7 +52,7 @@ typedef struct inode
     long pt;
 
     struct inode *children[MAX_CHILDREN];
-    long chls[MAX_CHILDREN];
+    int chls[MAX_CHILDREN];
 
     int st_size;
     int st_nlink;
